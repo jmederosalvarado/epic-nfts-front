@@ -6,39 +6,14 @@ import myEpicNft from "./utils/MyEpicNFT.json";
 
 const TWITTER_HANDLE = "_buildspace";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const OPENSEA_LINK = "";
-const TOTAL_MINT_COUNT = 50;
+// const OPENSEA_LINK = "";
+// const TOTAL_MINT_COUNT = 50;
 
 // I moved the contract address to the top for easy access.
 const CONTRACT_ADDRESS = "0xb3bdf3A8F5C5A1CfE9d214BD5e7DB6143042131F";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
-
-  const checkIfWalletIsConnected = async () => {
-    const { ethereum } = window;
-
-    if (!ethereum) {
-      console.log("Make sure you have metamask!");
-      return;
-    } else {
-      console.log("We have the ethereum object", ethereum);
-    }
-
-    const accounts = await ethereum.request({ method: "eth_accounts" });
-
-    if (accounts.length !== 0) {
-      const account = accounts[0];
-      console.log("Found an authorized account:", account);
-      setCurrentAccount(account);
-
-      // Setup listener! This is for the case where a user comes to our site
-      // and ALREADY had their wallet connected + authorized.
-      setupEventListener();
-    } else {
-      console.log("No authorized account found");
-    }
-  };
 
   const connectWallet = async () => {
     try {
@@ -130,6 +105,31 @@ const App = () => {
   };
 
   useEffect(() => {
+  const checkIfWalletIsConnected = async () => {
+    const { ethereum } = window;
+
+    if (!ethereum) {
+      console.log("Make sure you have metamask!");
+      return;
+    } else {
+      console.log("We have the ethereum object", ethereum);
+    }
+
+    const accounts = await ethereum.request({ method: "eth_accounts" });
+
+    if (accounts.length !== 0) {
+      const account = accounts[0];
+      console.log("Found an authorized account:", account);
+      setCurrentAccount(account);
+
+      // Setup listener! This is for the case where a user comes to our site
+      // and ALREADY had their wallet connected + authorized.
+      setupEventListener();
+    } else {
+      console.log("No authorized account found");
+    }
+  };
+
     checkIfWalletIsConnected();
   }, []);
 
